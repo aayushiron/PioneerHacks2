@@ -17,9 +17,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -53,19 +55,19 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
         Geocoder geo = new Geocoder(this, Locale.getDefault());
         try {
-            in = new Scanner(new File("adresses.txt"));
-            while (in.hasNextLine()) {
-                String address = in.nextLine();
-                List addressList = geo.getFromLocationName(address, 1);
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("addresses.txt")));
+            String bois = reader.readLine();
+            while (bois != null) {
+                List addressList = geo.getFromLocationName(bois, 1);
                 if (addressList != null && addressList.size() > 0) {
                     Address a = (Address) addressList.get(0);
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLatitude(), a.getLongitude())).title(in.nextLine()));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLatitude(), a.getLongitude())).title(reader.readLine()));
                 }
+                bois = reader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "File not found.", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(this, "Unable to process your request at the moment.", Toast.LENGTH_SHORT).show();
+        }catch (IOException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
