@@ -26,7 +26,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile(
+    implementation (
             "com.android.support:recyclerview-v7:24.2.1",
             "com.android.support:design:24.2.1",
 
@@ -40,10 +40,10 @@ dependencies {
             "io.reactivex:rxjava:1.1.10",
             "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar",
     )
-    compile("com.mikepenz:materialdrawer:5.6.0") { transitive = true }
+    implementation("com.mikepenz:materialdrawer:5.6.0") { transitive = true }
 
     // For getting views without clunky findViewById
-    compile "com.jakewharton:butterknife:8.4.0"
+    implementation "com.jakewharton:butterknife:8.4.0"
     implementation 'com.android.support:design:28.0.0'
 
 }
